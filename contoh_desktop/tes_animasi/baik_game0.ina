@@ -1,0 +1,278 @@
+# ################################################
+# Tunas Galaksi program dengan BAIK6
+# Game dengan Auto Double Buffering plus BGM
+# Copyright Haris Hasanudin 2010-2011
+# ################################################
+global ekspos1, pix, pos_x, pos_y, pos_w, pos_h
+ekspos1 = 0
+
+# inisialisasi ordinat harus dalam desimal/pecahan
+global xP1, yP1
+xP1 = 150.0
+yP1 = 300.0
+
+global x[], y, time, ltr
+untaian x[30]
+max_pelor = panjang x
+
+# inisialisasi ordinat harus dalam desimal/pecahan
+untuk (i=0; i<max_pelor; i++) ulang
+  # 150(posisi awal) + 58(lebar setengah pesawat jet)
+  x[i] = 208.0
+lagi
+
+y = 300.0
+time = 0
+
+global jml_enter
+jml_enter = 0
+
+global alpha, alpha2, size, size2
+alpha  = 1.0
+alpha2 = 1.0
+size   = 1
+size2  = 1
+# ################################################
+pakai_layar
+
+lyr1 = layar
+titel_layar lyr1, "Tunas Galaksi - Animasi Pesawat plus BGM"
+luas_layar  lyr1, 500, 550
+logo_layar  lyr1, "baik_logo.png"
+
+alas1 = alas_tegak
+hias_layar lyr1, alas1
+
+papan = papan_menu
+# -------------------------
+mn01  = menu
+
+mnMenu1  = isi_menu "Keluar"
+mnKeluar = isi_menu "Selesai"
+
+submenu       mnMenu1, mn01
+ tambah_menu  mn01, mnKeluar
+akhir_menu    papan, mnMenu1
+
+# -------------------------
+susun_menu alas1, papan
+
+tutup_program lyr1
+aksi_tutup_program mnKeluar
+
+lyr2 = layar_gulung
+hias_layar alas1, lyr2
+
+lyrkanvas = kanvas
+hias_layar lyr2, lyrkanvas
+
+aksi_ekspos           lyr1, &lakukan1(lyrkanvas)
+aksi_tekan_papanketik lyr1, &myketikan(lyrkanvas)
+
+musik_penghias "airwolf2.wav"
+detak_waktu 30,lyr1, &pewaktu(lyrkanvas)
+
+tampil_layar lyr1
+kibar_layar
+
+TAMAT
+# ################################
+
+
+# ################################
+# Timer
+# ################################
+Fungsi pewaktu(lyrkanvas1) {
+  # pakai pixmap untuk layar penyangga
+  hapus_pixmap pix
+  xx = alokasi_lebar  lyrkanvas1
+  yy = alokasi_tinggi lyrkanvas1
+  pix = bidang_pixmap lyrkanvas1, xx, yy, -1
+
+  ltr = latar_layar  pix, 0.5, 0.0, 0.0
+
+  # komponen berubah terhadap waktu
+
+  # buat bidang gambar dari PNG
+  pnl2 = bidang_ambilpng "baik_jet_01.png"
+
+  set_asalbidang ltr, pnl2, xP1, yP1
+  lukis_pena ltr
+  hapus_bidang  pnl2
+
+  warna_pena ltr, 0.0, 1.0, 1.0
+  atribut_teks ltr, 12, "Sans", "tebal"
+
+#  lukis_teks ltr, 10, 50, "Gerakkan Pesawat Dgn Tombol Panah"
+#  lukis_teks ltr, 10, 65, "<- : panah-kiri"
+#  lukis_teks ltr, 10, 80, "-> : panah-kanan"
+
+  kalau alpha > 0 maka
+    &gambarIntro(lyrkanvas1)
+  lainkalau alpha <= 0 dan alpha2 > 0 maka
+    &gambarIntro2(lyrkanvas1)
+  akhirkalau
+
+  kalau jml_enter <= 9 maka
+    &gambarPeluru()
+    sisa_peluru = max_pelor - 3 * jml_enter - 3
+    dtPelor = gabung "AMUNISI " , sisa_peluru
+    lukis_teks ltr, 350, 20, dtPelor
+  lainnya
+    warna_pena ltr, 1.0, 1.0, 0.0
+    lukis_teks ltr, 350, 20, "PELOR HABIS!"
+  akhirkalau
+
+  hapus_latar    ltr
+
+  lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+}
+
+# ################################
+# Aksi Ekspos
+# ################################
+Fungsi lakukan1(lyrkanvas1) {
+  # redrawing only bidang penyangga (pixmap)
+
+#  kalau ekspos1 == 0 maka
+    hapus_pixmap pix
+    xx = alokasi_lebar  lyrkanvas1
+    yy = alokasi_tinggi lyrkanvas1
+    pix = bidang_pixmap lyrkanvas1, xx,yy, -1
+
+    ltr = latar_layar  pix, 0.5, 0.0, 0.0
+
+    pos_x = area_x
+    pos_y = area_y
+    pos_w = area_lebar
+    pos_h = area_tinggi
+    lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+
+    ekspos1++
+#  akhirkalau
+
+}
+
+Fungsi myketikan(lyrkanvas2) {
+  tmb   = ketikan_nilai
+  kiri  = PANAH_KIRI
+  kanan = PANAH_KANAN
+  atas  = PANAH_ATAS
+  bawah = PANAH_BAWAH
+
+  enter = TOMBOL_ENTER
+
+  kalau tmb == kiri maka
+    xP1 = xP1 - 30
+  lainkalau tmb == kanan maka
+    xP1 = xP1 + 30
+  lainkalau tmb == atas maka
+    yP1 = yP1 - 30
+  lainkalau tmb == bawah maka
+    yP1 = yP1 + 30
+  akhirkalau
+
+  kalau tmb == enter maka
+    time = 0
+    jml_enter++
+
+    y = yP1
+    p0 = 3 * jml_enter
+    x[p0] = xP1 + 58.0
+    p1 = 3 * jml_enter + 1
+    x[p1] = xP1 + 58.0
+    p2 = 3 * jml_enter + 2
+    x[p2] = xP1 + 58.0
+
+    kalau jml_enter <= 9 maka
+      musik_penghias "bom1a.wav"
+    akhirkalau
+  akhirkalau
+
+  kalau jml_enter > 9 maka
+    stop_detak
+  akhirkalau
+
+}
+
+Fungsi gambarPeluru() {
+  time = time + 0.05
+  y = y - 5
+
+  # peluru 1 (R-Merah)
+  warna_pena     ltr, 1.0, 0.0, 0.0
+  p0 = 3 * jml_enter
+  x[p0] = x[p0] - 0.5 * time
+  lukis_kotakisi ltr, x[p0], y, 5, 5
+
+  # peluru 2 (G-Ijo)
+  warna_pena     ltr, 0.0, 1.0, 0.0
+  p1 = 3 * jml_enter + 1
+  x[p1] = x[p1] + 0.5 * time
+  lukis_kotakisi ltr, x[p1], y, 5, 5
+
+  # peluru 3 (B-Biru)
+  warna_pena     ltr, 0.0, 0.0, 1.0
+  p2 = 3 * jml_enter + 2
+  lukis_kotakisi ltr, x[p2], y, 5, 5
+
+}
+
+Fungsi gambarIntro(lyrkanvas2) {
+
+  tx = alokasi_lebar  lyrkanvas2
+  tx = tx/2
+  ty = alokasi_tinggi lyrkanvas2
+  ty = ty/2
+
+  size = size + 0.8
+  kalau size > 20 maka
+    alpha = alpha - 0.01
+  akhirkalau
+
+  atribut_teks ltr, size, "Arial", "tebal"
+  warna_pena ltr, 1.0, 1.0, 0.0
+
+  r = ruang_teks ltr, "TUNAS GALAKSI"
+
+  l_r = lebar_ruang_teks  r
+  t_r = tinggi_ruang_teks r
+  l_r  = l_r / 2
+  posx = tx - l_r
+
+  lekukan_teks ltr, posx, ty, "TUNAS GALAKSI"
+  klip_pena    ltr
+  gores_pena   ltr
+  pudar_pena   ltr, alpha
+
+}
+
+Fungsi gambarIntro2(lyrkanvas2) {
+
+  tx = alokasi_lebar  lyrkanvas2
+  tx = tx/2
+  ty = alokasi_tinggi lyrkanvas2
+  ty = ty/2
+
+  size2 = size2 + 0.5
+  kalau size2 > 20 maka
+    alpha2 = alpha2 - 0.01
+  akhirkalau
+
+  atribut_teks ltr, size2, "Arial", "tebal"
+  warna_pena ltr, 8.0, 8.0, 0.0
+
+  r = ruang_teks ltr, "Desain Haris dengan BAIK"
+
+  l_r = lebar_ruang_teks  r
+  t_r = tinggi_ruang_teks r
+  l_r  = l_r / 2
+  posx = tx - l_r
+
+  lekukan_teks ltr, posx, ty, "Desain Haris dengan BAIK"
+  klip_pena    ltr
+  gores_pena   ltr
+  pudar_pena   ltr, alpha2
+
+}
+

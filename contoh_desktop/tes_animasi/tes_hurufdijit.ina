@@ -1,0 +1,125 @@
+# ###############################################################
+# tes Animasi program dengan BAIK6
+# Detak Waktu pada layar - Ruang Teks with Pixmap Double Buffer
+# ###############################################################
+global ekspos1
+ekspos1 = 0
+global pix, pos_x, pos_y, pos_w, pos_h
+
+global count, x
+x = 0
+count = 0
+
+global myhuruf[]
+myhuruf[] = {"B", "A", "I", "K","-","C", "O", "D", "E"}
+# ################################################################
+
+pakai_layar
+
+lyr1 = layar
+titel_layar lyr1, "Sorotan Pentas dgn BAIK v6"
+luas_layar  lyr1, 450, 250
+logo_layar  lyr1, "baik_logo.png"
+
+alas1 = alas_tegak
+hias_layar lyr1, alas1
+
+papan = papan_menu
+# -------------------------
+mn01  = menu
+
+mnMenu1  = isi_menu "Utama"
+mnKeluar = isi_menu "Keluar"
+
+submenu       mnMenu1, mn01
+ tambah_menu  mn01, mnKeluar
+akhir_menu    papan, mnMenu1
+
+# -------------------------
+susun_menu alas1, papan
+
+tutup_program lyr1
+aksi_tutup_program mnKeluar
+
+lyr2 = layar_gulung
+hias_layar alas1, lyr2
+
+lyrkanvas = kanvas
+hias_layar lyr2, lyrkanvas
+aksi_ekspos lyr1, &lakukan1(lyrkanvas)
+
+detak_waktu 500,lyr1, &pewaktu(lyrkanvas)
+
+tampil_layar lyr1
+kibar_layar
+
+TAMAT
+# ################################
+
+
+# ################################
+# Timer
+# ################################
+Fungsi pewaktu(lyrkanvas1) {
+  # using pixmap
+  hapus_pixmap pix
+  xx = alokasi_lebar  lyrkanvas1
+  yy = alokasi_tinggi lyrkanvas1
+  dd = -1
+  pix = bidang_pixmap lyrkanvas1, xx, yy, dd
+
+  ltr = latar_layar  pix, 0.5, 0.0, 0.0
+
+  kalau count == 10 maka
+    stop_detak
+  akhirkalau
+
+  atribut_teks ltr, 35, "Sans", "tebal"
+  warna_pena ltr, 1.0, 1.0, 1.0
+
+  x = 50
+  untuk(i=0; i<count; i++) ulang
+    r = ruang_teks ltr, myhuruf[i]
+    l_r = lebar_ruang_teks  r
+    kalau i == 2 maka
+      l_r = l_r + 25     # khusus huruf I perlu lebar lebih banyak
+    lainnya
+      l_r = l_r + 5
+     akhirkalau
+    x   = x + l_r 
+    lukis_teks ltr, x, 100, myhuruf[i]
+  lagi
+
+
+  hapus_latar    ltr
+
+  lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+
+  count++
+
+}
+
+# ################################
+# Aksi Ekspos
+# ################################
+Fungsi lakukan1(lyrkanvas1) {
+  kalau ekspos1 == 0 maka
+    hapus_pixmap pix
+    xx = alokasi_lebar  lyrkanvas1
+    yy = alokasi_tinggi lyrkanvas1
+    dd = 1
+    pix = bidang_pixmap lyrkanvas1, xx, yy, -dd
+
+    ltr = latar_layar  pix, 0.5, 0.0, 0.0
+
+    pos_x = area_x
+    pos_y = area_y
+    pos_w = area_lebar
+    pos_h = area_tinggi
+    lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+
+    ekspos1++
+  akhirkalau
+
+}
+

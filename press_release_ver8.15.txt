@@ -1,0 +1,112 @@
+BAIK versi 8.15 (Istana Buitenzorg) Press Release
+----------------------------------------------------------
+
+Japan, 18 May 2014
+
+----------------------------------------------------------
+
+Ini Rilis untuk Perbaikan fungsi BAIK : AksiFungsi di Layar
+Level : Menengah
+Tipe : memory allocation for sub parameter
+
+----------------------------------------------------------
+
+Tes Rilis
+
+baik tes_buku_panel.ina
+
+baik tes_loop.ina
+baik tes_negasi.ina
+
+----------------------------------------------------------
+
+Pada Hari ini, Haris Hasanudin meluncurkan bahasa pemrograman komputer dalam bahasa
+Indonesia yang diberi nama BAIK (Bahasa Anak Indonesia untuk Komputer) versi 8.15.
+BAIK versi 8.15 dirilis dalam bentuk open source yang boleh dipakai untuk tujuan
+pendidikan, hobi maupun komersil.
+
+BAIK versi 8.15 merupakan upgrade dari Baik 8.1.
+
+Selain itu BAIK memiliki fitur-fitur kemudahan sebagai berikut:
+
+- Kode ditulis dalam bentuk plain text dalam ejaan bahasa Indonesia. 
+- Text editor (misal: Notepad di windows, Emacs di Linux) bisa dipakai untuk menulis kode.
+- Kode program tidak perlu dicompile. Kode source sebaiknya berakhiran .ina (indonesia).
+- Variable dalam BAIK tidak memerlukan pendefinisian terlebih dahulu.
+- Pendefinisian Fungsi/Sub Prosedur.
+- Array/Larik (dalam BAIK disebut Untaian) hanya ada dalam satu dimensi.
+- BAIK bisa digunakan untuk Web System melalui CGI (Common Gateway Interface).
+- BAIK bisa juga digunakan untuk membuat network program(TCP/IP sederhana).
+- BAIK memiliki ukuran yang sangat kecil, sehingga bisa juga diterapkan
+  untuk embeded system berbasis Linux/Unix, misalnya robot.
+- Mengakses Database: Mysql, SQLite, Postgresql, Oracle (bukan default)
+- Menulis kalimat SQL dengan ejaan Indonesia (translasi sql)
+- Membuat file gambar dengan grafik pustaka : GD versi 2.0 ke atas.
+- fungsi pengolahan data statistik
+- fungsi pengecek koneksi jaringan dengan Ping
+- membuat file gambar dengan format PNG and JPG
+- pembuatan aplikasi desktop dengan GTK+ versi 2.10 ke atas.
+- Fitur mencetak dengan Printer pada program aplikasi desktop
+- Penambaham komponen GUI untuk program aplikasi desktop
+ Komponen BUKU (Multi Tab)
+ Komponen RANTING_POHON (Tree)
+ Komponen TOMBOL_BERIKON
+-. Karakter Multi Byte pada program aplikasi desktop
+
+
+BAIK versi 8.0 bisa didownload dari web site Source Forge:
+
+   http://sourceforge.net/projects/baik
+
+BUKU pedoman pemrograman dasar bahasa BAIK juga tersedia di
+web site tersebut.
+
+Untuk bergabung dalam forum komunitas Facebook, silahkan lihat grup BAIK di:
+   http://www.facebook.com/group.php?gid=93444606373
+   Nama Grup: BAIK Bahasa Komputer Indonesia
+
+
+Selamat mencoba BAIK versi 8.0 !
+
+
+Pencipta bahasa BAIK,
+Haris Hasanudin,MSc.
+
+
+// ======================================================================================
+// Lisensi untuk BAIK versi 8.0 adalah sebagai berikut :
+// ======================================================================================
+// 0. Desain Program dan Kode Sumber BAIK versi 8 memiliki hak cipta dan bersifat rahasia.
+//    - BAIK Software Design is confidential and copyrighted. 
+// 1. Program dan Kode Sumber BAIK versi 8 disediakan seadanya dan tanpa kewenangan
+//    atas segala kesalahan/kerugian yang ditimbulkan akibat penggunaannya.
+//    - Software is provided "AS IS" and "NO WARRANTY".  
+// 2. Anda dibenarkan untuk mengkopi/mendistribusikan kembali Program dan atau Kode Sumber
+//    BAIK versi 8 jika tanpa perubahan apapun.
+//    - You can redistribute/copy software without modification.
+// 3. Anda dibenarkan memodifikasi Program dan atau Kode Sumber BAIK versi 8 jika ada
+//    ijin tertulis dari pencipta BAIK.
+//    - You can modify or add feature(s) to this software with agreement from Author.
+// 4. Segala persengketaan yang berkenaan dengan persetujuan lisensi ini akan diadili
+//    dengan hukum yang ada di Jepang atau Indonesia menurut kehendak pencipta BAIK.
+//    - Any action related to this Agreement will be governed by Indonesia/Japan laws.  
+// 5. Semua software BAIK mengikuti aturan hukum ekspor di Jepang atau Indonesia
+//    - All Software are subject to Indonesia/Japan export control laws.
+// 6. Anda tidak dibenarkan untuk menjual atau menjadi broker penjualan software BAIK.
+//    - You are not allowed to sell or resell this software.
+// 7. Anda dibenarkan untuk menggunakan software BAIK untuk kepentingan pribadi, pendidikan
+//    maupun komersial.
+//    - You may use this software for personal, educational or commercial use.
+// 8. Anda dibenarkan untuk menggunakan kode-kode dalam bahasa BAIK yang anda ciptakan
+//    untuk kepentingan pribadi, pendidikan maupun komersial.
+//    - You may use all codes that you created by BAIK language for personal, educational
+//    or commercial use. 
+// 9. Anda tidak dibenarkan untuk mengaku sebagai pemilik hak cipta software BAIK
+//    - You are not allowed to claim the copyright of this software.
+// 10. Persetujuan lisensi ini mungkin akan diubah pada masa yang akan datang dengan
+//    pemberitahuan oleh pencipta BAIK.
+//    -This Agreement may be changed in the future by Author announcement.
+// ======================================================================================
+
+
+

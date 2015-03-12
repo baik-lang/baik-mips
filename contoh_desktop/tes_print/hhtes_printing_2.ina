@@ -1,0 +1,192 @@
+# ################################################
+# Printing/Cetak program dengan BAIK7
+# Copyright @Haris Hasanudin 2011
+# ################################################
+
+global jenis_font, besar_font, nm_file, print_ope
+jenis_font = "Arial"
+besar_font = 10
+
+global tinggi_print, lebar_print
+global tinggi_teks,  lebar_teks
+
+global tot_baris, tot_hal, baris_per_hal
+global isi_arsip, isi_baris
+
+global jarak_baris, jarak_kopheader
+jarak_baris = 4
+
+global TINGGI_HEADER, CELAH_HEADER
+TINGGI_HEADER = 20.0
+CELAH_HEADER  = 8.5
+
+# ################################################
+pakai_layar
+
+lyr1 = layar
+titel_layar lyr1, "Cetak / Print Teks dgn Baik v7"
+luas_layar  lyr1, 470, 150
+logo_layar  lyr1, "baik_logo.png"
+
+alas1 = alas_tetap
+hias_layar lyr1, alas1
+
+### Tombol Dialog arsip
+btn1 = tombol "ambil arsip"
+set_tips btn1, "ambil arsip"
+hias_alas alas1, btn1, 10, 15, 120, 22
+aksi_fungsi btn1, &lakukan1(btn1)
+
+### Tombol Print
+btn2 = tombol "cetak arsip teks"
+set_tips btn2, "cetak arsip"
+hias_alas alas1, btn2, 160, 15, 120, 22
+print_ope = operasi_cetak
+aksi_fungsi btn2, &lakukan2(lyr1)
+
+### Tombol Keluar
+btn3 = tombol "Keluar"
+set_tips btn3, "tutup layar"
+hias_alas alas1, btn3, 10, 85, 80, 22
+
+tutup_program btn3
+tutup_program lyr1
+
+tampil_layar lyr1
+kibar_layar
+
+TAMAT
+
+# ################################
+Fungsi lakukan1(mybtn) {
+  arsip1 = Dialog_Arsip
+  nm_file = ""
+
+  kalau arsip1 <> "" maka
+    nm_file = arsip1
+    set_tombol mybtn, nm_file
+  akhirkalau
+
+  tulis "ambil arsip: ", nm_file, "\n"
+
+}
+
+Fungsi lakukan2(mylyr) {
+  tulis "fungsi : lakukan2\n"
+
+  print_ope = operasi_cetak
+  aksi_siap_cetak print_ope, &lakukan2_1()
+  aksi_cetak_teks print_ope, &lakukan2_2(mylyr)
+
+  mulai_cetak mylyr, print_ope
+
+}
+
+Fungsi lakukan2_1() {
+  tulis "==> fungsi : lakukan2_1\n"
+
+  isi_arsip = seluruh_arsip nm_file
+  isi_baris = pisah_per_baris isi_arsip
+  tot_baris = jumlah_baris_arsip isi_baris
+
+  tulis "tot baris arsip : ", tot_baris, "\n"
+
+  step_line  = besar_font + besar_font * 2 + jarak_baris
+  jarak_kopheader = step_line * 2
+
+  # height
+  tinggi_print = tinggi_cetakan TINGGI_HEADER, CELAH_HEADER
+  tinggi_print = tinggi_print - jarak_kopheader
+  tulis "tinggi_cetakan : ", tinggi_print, "\n"
+
+  baris_per_hal = baris_per_halaman tinggi_print, besar_font, jarak_baris
+  baris_per_hal = abs baris_per_hal
+  tulis "baris_per_hal : ", baris_per_hal, "\n"
+
+  tot_hal = (tot_baris - 1) / baris_per_hal + 1
+  tulis "total hal : ", tot_hal, "\n"
+
+  set_operasi_cetak print_ope, tot_hal
+
+  hapus isi_arsip
+
+  tulis "==> fungsi : lakukan2_1 OK\n"
+}
+
+Fungsi lakukan2_2(lyr2) {
+  tulis "***> fungsi : lakukan2_2\n"
+
+  # cr
+  konteks       = konteks_cetakan
+  tulis "pango_conteks OK\n"
+
+  # width
+  lebar_print   = lebar_cetakan
+  tulis "lebar_cetakan : ", lebar_print, "\n"
+
+  # layout
+  layout_print  = tatanan_cetakan
+  tulis "pango_layout OK\n"
+
+  atribut_print = set_atribut_cetak layout_print, jenis_font, besar_font
+  tulis "atribut_teks OK\n"
+
+# -------------------------------------------------------------------
+  tinggi_teks = tinggi_teks_cetak layout_print
+  tulis "tinggi_teks : ", tinggi_teks, "\n"
+
+  posx = 300
+  posy =  (TINGGI_HEADER - tinggi_teks) / 2
+  tulis "pos(x,y) = ", posx, ",", posy, " \n"
+  tulis_teks_cetak konteks, layout_print, posx, posy, "Contoh Cetak Teks dengan BAIK 7"
+
+# -------------------------------------------------------------------
+  n = halaman_aktual
+  tot_hal = absolut tot_hal
+  view_hal = gabung n, "/", tot_hal
+  tulis "tampilan hal : ", view_hal, "\n"
+
+  lebar_teks = lebar_teks_cetak layout_print, view_hal
+
+  posx = lebar_print - lebar_teks - 100
+  posy =  (TINGGI_HEADER - tinggi_teks) / 2
+  tulis "pos(x,y) = ", posx, ",", posy, " \n"
+  tulis_teks_cetak konteks, layout_print, posx, posy, view_hal
+
+# -------------------------------------------------------------------
+
+  start_line = (n - 1) * baris_per_hal
+  end_line   = (n - 1) * baris_per_hal + baris_per_hal
+  step_line  = besar_font + besar_font * 2 + jarak_baris
+
+  jarak_kopheader = step_line * 2
+
+  tulis "start line = ", start_line, " \n"
+  tulis "end line = ", end_line, " \n"
+  tulis "step line = ", step_line, " \n"
+
+  untuk(i=start_line; i < end_line; i++) ulang
+      kalau i >= tot_baris maka keluar_untuk
+      posx = 0
+
+      kalau i == 0 maka
+        posy = step_line
+      lainkalau i < baris_per_hal maka
+        posy = step_line + i * step_line
+      lainnya
+        posy = step_line + (i - start_line) * step_line
+      akhirkalau
+
+      posy = posy + jarak_kopheader
+
+      msg  = teks_per_baris isi_baris, i
+      # tulis "pos(x,y) = ", posx, ",", posy, " \n"
+      # tulis " ",i, "print: msg = ", msg, " \n"
+      tulis_teks_cetak konteks, layout_print, posx, posy, msg
+  lagi
+
+
+  tulis "***> fungsi : lakukan2_2 OK\n"
+}
+
+

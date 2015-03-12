@@ -1,0 +1,132 @@
+# ###############################################################
+# tes Animasi program dengan BAIK6
+# Detak Waktu pada layar - Splash with Pixmap Double Buffering
+# ###############################################################
+global ekspos1, atur1
+ekspos1 = 0
+atur1   = 0
+global pix, pos_x, pos_y, pos_w, pos_h
+global timer, alpha, size
+timer = 1
+alpha = 1.0
+size  = 1
+
+# ################################################################
+
+pakai_layar
+
+lyr1 = layar
+titel_layar lyr1, "BAIK v6 MACAN ASIA"
+luas_layar  lyr1, 450, 250
+logo_layar  lyr1, "baik_logo.png"
+
+alas1 = alas_tegak
+hias_layar lyr1, alas1
+
+papan = papan_menu
+# -------------------------
+mn01  = menu
+
+mnMenu1  = isi_menu "Keluar"
+mnKeluar = isi_menu "Selesai"
+
+submenu       mnMenu1, mn01
+ tambah_menu  mn01, mnKeluar
+akhir_menu    papan, mnMenu1
+
+# -------------------------
+susun_menu alas1, papan
+
+tutup_program lyr1
+aksi_tutup_program mnKeluar
+
+lyr2 = layar_gulung
+hias_layar alas1, lyr2
+
+lyrkanvas = kanvas
+hias_layar lyr2, lyrkanvas
+aksi_ekspos lyr1, &lakukan1(lyrkanvas)
+
+detak_waktu 30,lyr1, &pewaktu(lyrkanvas)
+
+tampil_layar lyr1
+kibar_layar
+
+TAMAT
+# ################################
+
+
+# ################################
+# Timer
+# ################################
+Fungsi pewaktu(lyrkanvas1) {
+  # using pixmap
+  hapus_pixmap pix
+  xx = alokasi_lebar  lyrkanvas1
+  yy = alokasi_tinggi lyrkanvas1
+  dd = -1
+  pix = bidang_pixmap lyrkanvas1, xx, yy, dd
+
+  ltr = latar_layar  pix, 0.5, 0.0, 0.0
+
+  kalau timer == 0 maka
+    stop_detak
+  akhirkalau
+
+  x = alokasi_lebar  lyrkanvas1
+  x = x/2
+  y = alokasi_tinggi lyrkanvas1
+  y = y/2
+
+  size = size + 0.8
+  kalau size > 20 maka
+    alpha = alpha - 0.01
+  akhirkalau
+
+  atribut_teks ltr, size, "Monotype Corsiva", "tebal"
+  warna_pena ltr, 0.0, 1.0, 1.0
+
+  r = ruang_teks ltr, "BAIK MACAN ASIA"
+
+  l_r = lebar_ruang_teks  r
+  t_r = tinggi_ruang_teks r
+  l_r  = l_r / 2
+  posx = x - l_r
+
+  lekukan_teks ltr, posx, y, "BAIK MACAN ASIA"
+  klip_pena    ltr
+  gores_pena   ltr
+  pudar_pena   ltr, alpha
+
+  hapus_latar    ltr
+
+  lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+
+  kalau alpha <= 0 maka
+    timer = 0
+  akhirkalau
+
+}
+
+# ################################
+# Aksi Ekspos
+# ################################
+Fungsi lakukan1(lyrkanvas1) {
+  kalau ekspos1 == 0 maka
+    hapus_pixmap pix
+    xx = alokasi_lebar  lyrkanvas1
+    yy = alokasi_tinggi lyrkanvas1
+    dd = -1
+    pix = bidang_pixmap lyrkanvas1, xx, yy, dd
+
+    pos_x = area_x
+    pos_y = area_y
+    pos_w = area_lebar
+    pos_h = area_tinggi
+    lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+
+    ekspos1++
+  akhirkalau
+
+}
+

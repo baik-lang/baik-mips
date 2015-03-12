@@ -1,0 +1,114 @@
+# ########################################
+# Cetak Gambar dgn Printer - BAIK versi 7
+# ########################################
+global print_ope
+
+global lyr1
+# ###########################################
+
+pakai_layar
+
+lyr1 = layar
+titel_layar lyr1, "Cetak File Gambar dgn BAIK 7"
+luas_layar  lyr1, 350, 300
+logo_layar  lyr1, "baik_logo2.png"
+
+alas1 = alas_tegak
+hias_layar lyr1, alas1
+
+papan = papan_menu
+# -------------------------
+mn01  = menu
+
+mnPemisah1 = menu_pemisah
+
+mnMenu1  = isi_menu "Utama"
+mnPrint = isi_menu "Cetak Gambar"
+mnKeluar = isi_menu "Keluar"
+
+submenu       mnMenu1, mn01
+ tambah_menu  mn01, mnPrint
+ tambah_menu  mn01, mnPemisah1
+ tambah_menu  mn01, mnKeluar
+akhir_menu    papan, mnMenu1
+
+# -------------------------
+susun_menu alas1, papan
+
+tutup_program lyr1
+aksi_tutup_program mnKeluar
+
+lyr2 = layar_gulung
+hias_layar alas1, lyr2
+
+lyrkanvas = kanvas
+hias_layar lyr2, lyrkanvas
+
+aksi_fungsi mnPrint, &aksi8(lyrkanvas)
+
+aksi_ekspos lyr1, &lakukan1(lyrkanvas)
+
+
+tampil_layar lyr1
+kibar_layar
+
+TAMAT
+
+# ################################
+Fungsi lakukan1(lyrkanvas1) {
+  # buat latar alas pada bidang dengan warna latar R, G, B
+  ltr = latar_layar  lyrkanvas1, 0.8, 0.5, 0.0
+
+  warna_pena ltr, 0.0, 1.0, 0.0
+  atribut_teks ltr, 14, "Sans", "tebal"
+  lukis_teks ltr, 10, 20, "Tampilan File Gambar"
+
+  # buat bidang gambar dari PNG
+  pnl2 = bidang_ambilpng "BaikLogo3.png"
+
+  set_asalbidang ltr, pnl2, 10, 30
+  lukis_pena ltr
+
+  # hapus memori latar
+  hapus_latar  ltr
+
+  hapus_bidang  pnl2
+
+}
+
+
+Fungsi aksi8(mykanvas) {
+  tulis "Cetak Printer ...\n"
+
+  print_ope = operasi_cetak
+  aksi_siap_cetak print_ope, &lakukan2_1()
+  aksi_cetak_teks print_ope, &lakukan2_2()
+  mulai_cetak lyr1, print_ope
+
+}
+
+Fungsi lakukan2_1() {
+  tot_hal = 1
+  set_operasi_cetak print_ope, tot_hal
+}
+
+Fungsi lakukan2_2() {
+  # set latar dgn konteks printer
+  ltr           = konteks_cetakan
+  lebar_print   = lebar_cetakan
+  layout_print  = tatanan_cetakan
+
+  warna_pena ltr, 0.0, 1.0, 0.0
+  atribut_teks ltr, 14, "Sans", "tebal"
+  lukis_teks ltr, 10, 20, "Tampilan File Gambar"
+
+  # buat bidang gambar dari PNG
+  pnl2 = bidang_ambilpng "BaikLogo3.png"
+
+  set_asalbidang ltr, pnl2, 10, 30
+  lukis_pena ltr
+
+}
+
+
+

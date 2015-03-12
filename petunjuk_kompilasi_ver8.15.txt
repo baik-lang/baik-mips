@@ -1,0 +1,83 @@
+Petunjuk Kompilasi BAIK versi 8.15 (Istana Buitenzorg)
+----------------------------------------------------------------
+
+[1] Di Linux
+- Pastikan ada gcc di Linux
+- Jalankan compile_lnx_full.sh
+
+[2] Di Windows
+- Gunakan VisualC++ 2008 ke atas
+- Buat Solution
+- Import semua kode BAIK ke Solution
+- Build Solution
+ 
+ C_OPTION:
+/D"WIN32" /D"WINDOWS" /D"USE_SSL" /D"USE_GTK2" /D"USE_MYSQL" /D"USE_PDF" /D"USE_SQLITE" /D"USE_PGSQL" /D "USE_WEBSTYLE" /D"USE_CGI"
+
+LINKER_OPTION:
+bgd.lib libmysql.lib sqlite3.lib libpq.lib libeay32.lib ssleay32.lib libhpdf.lib libpng.lib zdll.lib pthreadVC2.lib
+
+COMPILE LANGUAGE: C (/TC)
+
+/Ox /GA /DWIN32 /D"WINDOWS" /MT /nologo /W0 /c /I(all VC and Library headers)
+
+LIBRARY:
+--------
+atk-dev_1.26
+cairo-dev_1.8.6
+gd-2.0.34-win32
+glib-dev_2.20.3
+gtk+-dev_2.16.2
+libharu-2.1.0-vc8
+libpng-dev_1.4.3-1_win32
+mysql4_dev
+ocilib
+openssl-0.9.8k_WIN32
+pango-dev_1.24
+PostgreSql8
+VC-SQLite-dev
+zlib123-dll
+
+
+Selamat mencoba BAIK versi 8.15 (Istana Buitenzorg)
+
+Pencipta bahasa BAIK,
+Haris Hasanudin,BSc. MSc.
+
+
+
+// ======================================================================================
+// Lisensi untuk BAIK versi 8 adalah sebagai berikut :
+// ======================================================================================
+// 0. Desain Program dan Kode Sumber BAIK versi 8 memiliki hak cipta dan bersifat rahasia.
+//    - BAIK Software Design is confidential and copyrighted. 
+// 1. Program dan Kode Sumber BAIK versi 8 disediakan seadanya dan tanpa kewenangan
+//    atas segala kesalahan/kerugian yang ditimbulkan akibat penggunaannya.
+//    - Software is provided "AS IS" and "NO WARRANTY".  
+// 2. Anda dibenarkan untuk mengkopi/mendistribusikan kembali Program dan atau Kode Sumber
+//    BAIK versi 8 jika tanpa perubahan apapun.
+//    - You can redistribute/copy software without modification.
+// 3. Anda dibenarkan memodifikasi Program dan atau Kode Sumber BAIK versi 8 jika ada
+//    ijin tertulis dari pencipta BAIK.
+//    - You can modify or add feature(s) to this software with agreement from Author.
+// 4. Segala persengketaan yang berkenaan dengan persetujuan lisensi ini akan diadili
+//    dengan hukum yang ada di Jepang atau Indonesia menurut kehendak pencipta BAIK.
+//    - Any action related to this Agreement will be governed by Indonesia/Japan laws.  
+// 5. Semua software BAIK mengikuti aturan hukum ekspor di Jepang atau Indonesia
+//    - All Software are subject to Indonesia/Japan export control laws.
+// 6. Anda tidak dibenarkan untuk menjual atau menjadi broker penjualan software BAIK.
+//    - You are not allowed to sell or resell this software.
+// 7. Anda dibenarkan untuk menggunakan software BAIK untuk kepentingan pribadi, pendidikan
+//    maupun komersial.
+//    - You may use this software for personal, educational or commercial use.
+// 8. Anda dibenarkan untuk menggunakan kode-kode dalam bahasa BAIK yang anda ciptakan
+//    untuk kepentingan pribadi, pendidikan maupun komersial.
+//    - You may use all codes that you created by BAIK language for personal, educational
+//    or commercial use. 
+// 9. Anda tidak dibenarkan untuk mengaku sebagai pemilik hak cipta software BAIK
+//    - You are not allowed to claim the copyright of this software.
+// 10. Persetujuan lisensi ini mungkin akan diubah pada masa yang akan datang dengan
+//    pemberitahuan oleh pencipta BAIK.
+//    -This Agreement may be changed in the future by Author announcement.
+// ======================================================================================
+

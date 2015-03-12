@@ -1,0 +1,122 @@
+# ################################################
+# tes Animasi program dengan BAIK6
+# Detak Waktu pada layar - Auto Double Buffering
+# ################################################
+global ekspos1
+ekspos1 = 0
+global pix, pos_x, pos_y, pos_w, pos_h
+
+global R, theta, x, y, sudut
+R     = 100
+PI    = 4.1314
+sudut = 2*PI
+# ################################################
+
+pakai_layar
+
+lyr1 = layar
+titel_layar lyr1, "Animasi File Gambar"
+luas_layar  lyr1, 400, 400
+logo_layar  lyr1, "baik_logo.png"
+
+alas1 = alas_tegak
+hias_layar lyr1, alas1
+
+papan = papan_menu
+# -------------------------
+mn01  = menu
+
+mnMenu1  = isi_menu "Utama"
+mnKeluar = isi_menu "Keluar"
+
+submenu       mnMenu1, mn01
+ tambah_menu  mn01, mnKeluar
+akhir_menu    papan, mnMenu1
+
+# -------------------------
+susun_menu alas1, papan
+
+tutup_program lyr1
+aksi_tutup_program mnKeluar
+
+lyr2 = layar_gulung
+hias_layar alas1, lyr2
+
+lyrkanvas = kanvas
+hias_layar lyr2, lyrkanvas
+aksi_ekspos lyr1, &lakukan1(lyrkanvas)
+
+detak_waktu 200,lyr1, &pewaktu(lyrkanvas)
+
+tampil_layar lyr1
+kibar_layar
+
+TAMAT
+# ################################
+
+
+# ################################
+# Timer
+# ################################
+Fungsi pewaktu(lyrkanvas1) {
+  # pakai pixmap untuk layar penyangga
+  hapus_pixmap pix
+  xx = alokasi_lebar  lyrkanvas1
+  yy = alokasi_tinggi lyrkanvas1
+  pix = bidang_pixmap lyrkanvas1, xx, yy, -1
+
+  ltr = latar_layar  pix, 0.8, 0.8, 0.0
+
+  T1 = sin theta
+  T2 = cos theta
+  x = 150 + R * T1
+  y = 100 + R * T2
+
+  theta = theta + 5
+  kalau theta > 360 maka
+    theta = 0
+  akhirkalau
+
+  # komponen berubah terhadap waktu
+
+  # buat bidang gambar dari PNG
+  pnl2 = bidang_ambilpng "baik_mungil.png"
+
+  set_asalbidang ltr, pnl2, x, y
+  lukis_pena ltr
+  hapus_bidang  pnl2
+
+  warna_pena ltr, 0.0, 1.0, 1.0
+  atribut_teks ltr, 18, "Sans", "tebal"
+  lukis_teks ltr, 10, 270, "Animasi File Gambar dengan BAIK"
+
+  hapus_latar    ltr
+
+  lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+}
+
+# ################################
+# Aksi Ekspos
+# ################################
+Fungsi lakukan1(lyrkanvas1) {
+  # redrawing only bidang penyangga (pixmap)
+
+  kalau ekspos1 == 0 maka
+    hapus_pixmap pix
+    xx = alokasi_lebar  lyrkanvas1
+    yy = alokasi_tinggi lyrkanvas1
+    pix = bidang_pixmap lyrkanvas1, xx, yy, -1
+
+    ltr = latar_layar  pix, 0.8, 0.8, 0.0
+
+    pos_x = area_x
+    pos_y = area_y
+    pos_w = area_lebar
+    pos_h = area_tinggi
+    lukis_pixmap lyrkanvas1, pix, pos_x, pos_y, pos_x, pos_y, pos_w, pos_h
+
+    ekspos1++
+  akhirkalau
+
+}
+
